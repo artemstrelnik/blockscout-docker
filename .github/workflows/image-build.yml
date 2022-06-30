@@ -1,10 +1,12 @@
 name: Image build and push
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: 
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Build docker image
+        default: v1.0.0
+        required: true
 
 jobs:
   build:
