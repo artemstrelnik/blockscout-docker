@@ -22,7 +22,7 @@ ENV MIX_ENV="prod" \
 ## Build blockscout
 
 ## Clone Blockscout
-RUN git clone -b build-1 https://github.com/artemstrelnik/blockscout.git
+RUN git clone https://github.com/artemstrelnik/blockscout.git
 
 WORKDIR /blockscout
 
