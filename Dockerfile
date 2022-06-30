@@ -7,8 +7,7 @@ RUN apt-get update && \
     g++ build-essential -y
 
 ## Install NodeJS & npm
-RUN apt-get install nodejs npm -y && \
-    npm install npm@latest
+RUN apt-get install nodejs npm -y
 
 ## Install Rust
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
