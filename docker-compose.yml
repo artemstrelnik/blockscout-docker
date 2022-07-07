@@ -1,32 +1,34 @@
 version: '3'
 services:
-  database:
+  db:
     image: postgres:latest
     restart: always
     ports:
-      - 5432:5432
+      - 7432:7432
     environment:
       POSTGRES_PASSWORD: "123"
       POSTGRES_USER: "blockscout"
     volumes:
-      - ./database_data:/var/lib/postgresql/data
+      - database_data:/var/lib/postgresql/data
     networks:
       - db
     
   blockscout:
       depends_on:
-        - database
-      image: "docker.pkg.github.com/artemstrelnik/blockscout/blockscout:main"
+        - db
+      image: "docker.pkg.github.com/artemstrelnik/blockscout-docker/blockscout-docker:main"
+      links:
+        - db
       restart: always
-      # links:
-      #   - database
       tty: true
       networks:
         - db
       environment:
-        DATABASE_URL: "postgresql://blockscout:123@db:5432/blockscout?ssl=false"
+        DATABASE_URL: "postgresql://blockscout:123@db:7432/blockscout?ssl=false"
         ECTO_USE_SSL: "false"
-      command: 'mix do ecto.create, ecto.migrate, phx.server'
+        POSTGRES_PASSWORD: "123"
+        POSTGRES_USER: "blockscout"
+      command: "mix do ecto.drop, ecto.create, ecto.migrate, phx.server"
       ports:
         - "4000:4000"
       expose:
@@ -36,6 +38,6 @@ networks:
   db:
     driver: bridge
 
-# volumes:
-#   database_data:
-#     driver: local
+volumes:
+  database_data:
+    driver: local
