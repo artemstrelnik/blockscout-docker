@@ -1,14 +1,13 @@
 version: '3'
 services:
   db:
-    image: postgres:13.6
+    image: postgres
     restart: always
     ports:
       - "7433:5432"
     environment:
       POSTGRES_PASSWORD: "123"
       POSTGRES_USER: "blockscout"
-      POSTGRES_HOST_AUTH_METHOD: "trust"
 
     volumes:
       - database_data:/var/lib/postgresql/data
@@ -25,8 +24,6 @@ services:
         ECTO_USE_SSL: "false"
         POSTGRES_PASSWORD: "123"
         POSTGRES_USER: "blockscout"
-      extra_hosts:
-      - 'host.docker.internal:host-gateway'
       command: "mix do ecto.drop, ecto.create, ecto.migrate, phx.server"
       ports:
         - "4000:4000"
