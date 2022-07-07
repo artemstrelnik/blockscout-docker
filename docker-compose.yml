@@ -4,24 +4,24 @@ services:
     image: postgres:13.6
     restart: always
     ports:
-      - "7432:5432"
+      - "7433:5432"
     environment:
       POSTGRES_PASSWORD: "123"
       POSTGRES_USER: "blockscout"
       POSTGRES_HOST_AUTH_METHOD: "trust"
+
+    volumes:
+      - database_data:/var/lib/postgresql/data
     
   blockscout:
       depends_on:
         - db
       image: "docker.pkg.github.com/artemstrelnik/blockscout-docker/blockscout-docker:main"
       links:
-      - db:database
-      # restart: always
+      - db
       tty: true
-      # networks:
-      #   - db
       environment:
-        DATABASE_URL: "postgresql://blockscout:123@host.docker.internal:7432/blockscout?ssl=false"
+        DATABASE_URL: "postgresql://blockscout:123@db:7433/blockscout?ssl=false"
         ECTO_USE_SSL: "false"
         POSTGRES_PASSWORD: "123"
         POSTGRES_USER: "blockscout"
@@ -32,7 +32,6 @@ services:
         - "4000:4000"
       expose:
         - "4000"
-
-# networks:
-#   db:
-#     driver: bridge
+volumes:
+  database_data:
+    driver: local
