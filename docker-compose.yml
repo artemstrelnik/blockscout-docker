@@ -15,7 +15,7 @@ services:
   blockscout:
       depends_on:
         - db
-      image: "docker.pkg.github.com/artemstrelnik/blockscout-docker/blockscout-docker:main"
+      image: "docker.pkg.github.com/artemstrelnik/blockscout-1/blockscout-1:latest"
       links:
       - db
       tty: true
