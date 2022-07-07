@@ -20,7 +20,7 @@ services:
       - db
       tty: true
       environment:
-        DATABASE_URL: "postgresql://blockscout:123@db:7433/blockscout?ssl=false"
+        DATABASE_URL: "postgresql://blockscout:123@db:5432/blockscout?ssl=false"
         ECTO_USE_SSL: "false"
         POSTGRES_PASSWORD: "123"
         POSTGRES_USER: "blockscout"
