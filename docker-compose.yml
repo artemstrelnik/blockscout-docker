@@ -17,27 +17,21 @@ services:
         - db
       image: "docker.pkg.github.com/artemstrelnik/blockscout-1/blockscout-1:latest"
       links:
-        - db
+      - db
       tty: true
-      env_file:
-        -  ./blockscout.env
-      # environment:
-      #   DATABASE_URL: "postgresql://blockscout:123@db:5432/blockscout?ssl=false"
-      #   ETHEREUM_JSONRPC_HTTP_URL: "http://localhost:8545"
-      #   ETHEREUM_JSONRPC_TRACE_URL: "http://localhost:8545"
-      #   ETHEREUM_JSONRPC_WS_URL: "ws://localhost:8546"
-      #   ETHEREUM_JSONRPC_VARIANT: "parity"
-      #   COIN: "POA"
-      #   NETWORK: "POA"
-      #   ECTO_USE_SSL: "false"
-
-        # POSTGRES_PASSWORD: "123"
-        # POSTGRES_USER: "blockscout"
-        # PORT: "4000"
-        # POOL_SIZE: "40"
-        # POOL_SIZE_API: "10" 
-        # HEART_BEAT_TIMEOUT: "30"
-        
+      environment:
+        DATABASE_URL: "postgresql://blockscout:123@db:5432/blockscout?ssl=false"
+        ECTO_USE_SSL: "false"
+        POSTGRES_PASSWORD: "123"
+        POSTGRES_USER: "blockscout"
+        PORT: "4000"
+        POOL_SIZE: "40"
+        POOL_SIZE_API: "10" 
+        HEART_BEAT_TIMEOUT: "30"
+        ETHEREUM_JSONRPC_HTTP_URL: "http://host.docker.internal:8545/"
+        ETHEREUM_JSONRPC_TRACE_URL: "http://localhost:8545"
+        ETHEREUM_JSONRPC_WS_URL: "ws://localhost:8546"
+        ETHEREUM_JSONRPC_VARIANT: "parity"
       command: "mix do ecto.drop, ecto.create, ecto.migrate, phx.server"
       ports:
         - "4000:4000"
