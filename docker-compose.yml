@@ -31,7 +31,8 @@ services:
         ETHEREUM_JSONRPC_HTTP_URL: "http://185.135.80.216:8545"
         ETHEREUM_JSONRPC_WS_URL: "ws://185.135.80.216:8546"
         ETHEREUM_JSONRPC_VARIANT: "geth"
-      command: "mix do ecto.drop, ecto.create, ecto.migrate, phx.server"
+      #command: "mix do ecto.drop, ecto.create, ecto.migrate, phx.server"
+      command: "mix phx.server"
       ports:
         - "4009:4000"
       expose:
